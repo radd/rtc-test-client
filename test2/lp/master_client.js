@@ -79,8 +79,8 @@ function endTest() {
 	var avg = sum/clients.avg.length;
 				
 	console.log("AVG: " + avg);
-
-	process.exit(0);
+  
+  process.exit(0);
 };
 
 

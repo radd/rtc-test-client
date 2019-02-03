@@ -29,7 +29,7 @@ function createClients() {
 			"timeSpan": clients.msgSpan,
 			"msgCount": clients.msgCount,
 			"delay": (i+1) * (clients.msgSpan / clients.count),
-			"stopReceive": clients.msgCount * ( clients.count - 1)
+			"stopReceive": clients.msgCount * clients.count
 		}));
 		
 		client.on('message', function(message) {
