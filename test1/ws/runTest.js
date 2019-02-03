@@ -1,4 +1,4 @@
-//test1 - http
+//test1 - ws
 const cp = require('child_process');
 const fs = require('fs');
 
@@ -32,7 +32,7 @@ function runNextTest() {
 }
 
 function endTest() {
-
+  
   var sum = 0;
   for(var i = 0; i < output.length; i++) {
     sum += parseInt(output[i]);
