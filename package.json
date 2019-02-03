@@ -1,0 +1,20 @@
+{
+  "name": "mgr-test-client",
+  "version": "1.0.0",
+  "description": "test client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://radnet@bitbucket.org/radnet/mgr-test-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/radnet/mgr-test-client#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "request": "^2.88.0"
+  }
+}
