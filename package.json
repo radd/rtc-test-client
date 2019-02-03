@@ -15,6 +15,7 @@
   "homepage": "https://bitbucket.org/radnet/mgr-test-client#readme",
   "dependencies": {
     "child_process": "^1.0.2",
+    "eventsource": "^1.0.7",
     "request": "^2.88.0",
     "stompjs": "^2.3.3"
   }
