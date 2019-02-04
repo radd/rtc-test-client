@@ -116,7 +116,7 @@ function handleResponse(res) {
 		const el = JSON.parse(res[i]);
 		countRecMsg++;
 		nextMsg++;
-console.log(countRecMsg);
+//console.log(countRecMsg);
 		var nowTime = Date.now();
 		times.push(nowTime - el.timestamp);
 //console.log("id:" + id + " " + el.payload);
