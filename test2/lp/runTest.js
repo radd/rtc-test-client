@@ -1,6 +1,7 @@
-//test2 - sse
+//test2 - lp
 const cp = require('child_process');
 const fs = require('fs');
+var request = require('request');
 
 var args = process.argv.slice(2);
 var testCount = args.length > 0 ? parseInt(args[0]) : 5;
@@ -11,7 +12,8 @@ var msgSpan = args.length > 3 ? parseInt(args[3]) : 100;
 var currentTest = 1;
 var output = [];
 var avg = 0;
-
+var isMonitoring = true;
+var monitorDelay = isMonitoring ? 5000 : 0;
 
 resetServer(runNextTest);
 
@@ -21,25 +23,32 @@ function runNextTest() {
     return;
   }
   
-  currentTest++;
-  var a = 1;
-  var client = cp.execFile('node', ['./master_client.js', clientCount, msgCount, msgSpan], (error, stdout, stderr) => {
-    if (error) {console.error('stderr', stderr);}
-    
-    var s = stdout.split('\n');
-    
-    for(var i = 0; i < s.length; i++) {
+  startServerMonitor(function () {
+    currentTest++;
+  
+    var client = cp.execFile('node', ['./master_client.js', clientCount, msgCount, msgSpan], (error, stdout, stderr) => {
+      if (error) {console.error('stderr', stderr);}
       
-      if(s[i].indexOf('AVG:')==0) {
-        var temp = s[i].replace('AVG:','');
-        console.log(temp.trim());
-        output.push(temp.trim());
-        resetServer(runNextTest);
-        break;
-      }
-    }   
-    
+      var s = stdout.split('\n');
+      
+      for(var i = 0; i < s.length; i++) {
+        
+        if(s[i].indexOf('AVG:')==0) {
+          var temp = s[i].replace('AVG:','');
+          console.log(temp.trim());
+          output.push(temp.trim());
+          
+          finishServerMonitor(function () {
+            resetServer(runNextTest);
+          });
+
+          break;
+        }
+      }   
+      
+    });
   });
+  
 
 }
 
@@ -64,6 +73,41 @@ function endTest() {
   
   wtiteToFile();
   console.log("end test");
+}
+
+
+function startServerMonitor(callback) {
+
+  var options = {
+		uri: 'http://localhost:8080/monitor/start',
+		method: 'POST',
+		json: {
+      start: isMonitoring,
+			type: "lp",
+			testID: currentTest
+		}
+	};
+
+  request(options, function (error, response, body) {
+    setTimeout(callback, monitorDelay);
+  });
+  
+}
+
+function finishServerMonitor(callback) {
+  setTimeout(function () {
+    var options = {
+      uri: 'http://localhost:8080/monitor/stop',
+      method: 'GET'
+    };
+  
+    request(options, function (error, response, body) { 
+
+      callback();
+    });
+
+  }, monitorDelay);
+
 }
 
 

@@ -26,7 +26,6 @@ function runNextTest() {
   startServerMonitor(function () {
     currentTest++;
 
-    var a = 1;
     var client = cp.execFile('node', ['./master_client.js', clientCount, msgCount, msgSpan], (error, stdout, stderr) => {
       if (error) {console.error('stderr', stderr);}
       
