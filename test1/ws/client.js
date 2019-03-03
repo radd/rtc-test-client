@@ -8,10 +8,11 @@ var countRecMsg = 0;
 var payload = getPayload();
 var startTime;
 var endTime;
+var IP = "localhost";
 
 function connect() {
 	
-	wsClient = Stomp.overWS('ws://localhost:8080/send');
+	wsClient = Stomp.overWS('ws://'+IP+':8080/send');
 
 	wsClient.connect({}, function(frame) {
     //console.log('Connected');

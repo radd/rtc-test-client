@@ -11,7 +11,7 @@ var countSendMsg = 1;
 var sendMsgReqCount = 0;
 var stopReceive;
 var countRecMsg = 0;
-
+var IP = "localhost";
 
 process.on('message', function(message) {
 	var msg = JSON.parse(message);
@@ -39,7 +39,7 @@ process.on('message', function(message) {
 
 function connect() {
 	
-	wsClient = Stomp.overWS('ws://localhost:8080/send');
+	wsClient = Stomp.overWS('ws://'+IP+':8080/send');
 	
 	wsClient.connect({}, function(frame) {
         //console.log('Connected');

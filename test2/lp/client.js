@@ -9,6 +9,7 @@ var sendMsgReqCount = 0;
 var nextMsg = 1;
 var stopReceive;
 var countRecMsg = 0;
+var IP = "localhost";
 
 process.on('message', function(message) {
 	var msg = JSON.parse(message);
@@ -41,7 +42,7 @@ function connect() {
 	//console.log("connect");
     
 	var options = {
-		uri: 'http://localhost:8080/lp/get?next=' + nextMsg,
+		uri: 'http://'+IP+':8080/lp/get?next=' + nextMsg,
 		method: 'GET'
 	  };
 
@@ -60,7 +61,7 @@ function startTest() {
 	console.log("client " + id + " start test");
 	
 	var options = {
-		uri: 'http://localhost:8080/lp/send',
+		uri: 'http://'+IP+':8080/lp/send',
 		method: 'POST',
 		json: {
 			clientID: id,
@@ -74,7 +75,7 @@ function startTest() {
 		interval = setInterval(function() {
 			
 			if(sendMsgReqCount < msgCount){
-                options.json.payload = sendMsgReqCount;
+                //options.json.payload = sendMsgReqCount;
 				sendMsg(options);
 				sendMsgReqCount++;
 			}

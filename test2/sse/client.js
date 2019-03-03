@@ -12,6 +12,8 @@ var sendMsgReqCount = 0;
 var eventSource;
 var stopReceive;
 var countRecMsg = 0;
+var IP = "localhost";
+
 
 process.on('message', function(message) {
 	var msg = JSON.parse(message);
@@ -39,7 +41,7 @@ process.on('message', function(message) {
 	
 function connect() {
 	
-	eventSource = new EventSource("http://localhost:8080/sse/reg?id="+id);
+	eventSource = new EventSource('http://'+IP+':8080/sse/reg?id='+id);
 	
 	
 	eventSource.onopen = function() {
@@ -75,7 +77,7 @@ function startTest() {
 	//console.log("client " + id + " start test");
 	
 	var options = {
-		uri: 'http://localhost:8080/sse/send',
+		uri: 'http://'+IP+':8080/sse/send',
 		method: 'POST',
 		json: {
 			clientID: id,

@@ -7,9 +7,10 @@ var payloadSize = args.length > 1 ? parseInt(args[1]) : 100;
 var countRecMsg = 0;
 var startTime;
 var endTime;
+var IP = "localhost";
 
 var options = {
-  uri: 'http://localhost:8080/http/send',
+  uri: 'http://'+IP+':8080/http/send',
   method: 'POST',
   body: getPayload()
 };
