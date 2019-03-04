@@ -1,5 +1,5 @@
 var request = require('request');
-var W3CWebSocket = require('websocket').w3cwebsocket;
+var Stomp = require('stompjs');
 
 var wsClient;
 var id;
@@ -38,34 +38,28 @@ process.on('message', function(message) {
 });
 
 function connect() {
-
-  wsClient = new W3CWebSocket('ws://'+IP+':8080/ws-connect');
-
-  wsClient.onerror = function() {
-      console.log('Connection Error');
-  };
-
-  wsClient.onopen = function() {
-    process.send(JSON.stringify({"type": "connected"}));	
-  };
-
-  wsClient.onclose = function() {
-    console.log('echo-protocol Client Closed');
-  };
-
-  wsClient.onmessage = function(message) {
-    var res = JSON.parse(message.data);
-    countRecMsg++;
-  
-    handleResponse(res);
-    
-    if(countRecMsg == stopReceive)
-    {
-      //console.log("client " + id + " end receive");
-      endTest();
-    }
-  };
-
+	
+	wsClient = Stomp.overWS('ws://'+IP+':8080/send');
+	
+	wsClient.connect({}, function(frame) {
+        //console.log('Connected');
+		
+		wsClient.subscribe('/topic/receive', function(message) {
+            var res = JSON.parse(message.body);
+			countRecMsg++;
+		
+			handleResponse(res);
+			
+			if(countRecMsg == stopReceive)
+			{
+				//console.log("client " + id + " end receive");
+				endTest();
+			}
+        });
+		
+		process.send(JSON.stringify({"type": "connected"}));	
+		
+    });
 
 	
 }
@@ -99,7 +93,7 @@ function sendMsg() {
 		timestamp: Date.now(),
 		payload: ""
 	}
-	wsClient.send(JSON.stringify(data));
+	wsClient.send('/ws/send', {}, JSON.stringify(data));
 
 }
 

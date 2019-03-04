@@ -65,7 +65,11 @@ function endTest() {
 }
 
 function startServerMonitor(callback) {
-
+  if(!isMonitoring) {
+    callback();
+    return;
+  }
+    
   var options = {
 		uri: 'http://localhost:8080/monitor/start',
 		method: 'POST',

@@ -1,7 +1,6 @@
-var W3CWebSocket = require('websocket').w3cwebsocket;
+var Stomp = require('stompjs');
 
 // node .\client.js 100 100
-var wsClient;
 var args = process.argv.slice(2);
 var msgCount = parseInt(args[0]);
 var payloadSize = args.length > 1 ? parseInt(args[1]) : 100;
@@ -13,29 +12,24 @@ var IP = "localhost";
 
 function connect() {
 	
-	wsClient = new W3CWebSocket('ws://'+IP+':8080/ws-connect');
+	wsClient = Stomp.overWS('ws://'+IP+':8080/send');
 
-  wsClient.onerror = function() {
-      console.log('Connection Error');
-  };
-
-  wsClient.onopen = function() {
-      	startTest();
-  };
-
-  wsClient.onclose = function() {
-      console.log('echo-protocol Client Closed');
-  };
-
-  wsClient.onmessage = function(e) {
-      countRecMsg++;
+	wsClient.connect({}, function(frame) {
+    //console.log('Connected');
+		
+		wsClient.subscribe('/topic/receive', function(message) {
+			countRecMsg++;
 		
 			if(countRecMsg == msgCount)
 			{
 				endTime = Date.now();				
 				endTest();
 			}
-  };
+    });
+		
+		startTest();
+		
+    });
 
 	
 }
@@ -49,7 +43,7 @@ function startTest() {
 
 
 function sendMsg() {
-	wsClient.send(payload);
+	wsClient.send('/ws/send', {}, payload);
 }
 
 
