@@ -10,6 +10,7 @@ var payload = getPayload();
 var startTime;
 var endTime;
 var IP = "localhost";
+//var IP = "192.168.10.2";
 
 function connect() {
 	
@@ -28,6 +29,7 @@ function connect() {
   };
 
   wsClient.onmessage = function(e) {
+		//console.log("rec: " + (Date.now() - startTime));
       countRecMsg++;
 		
 			if(countRecMsg == msgCount)
@@ -35,20 +37,26 @@ function connect() {
 				endTime = Date.now();				
 				endTest();
 			}
+			else {
+				sendMsg();
+			}
+			//console.log(Date.now() - startTime);
   };
 
 	
 }
 
 function startTest() {
+	//wsClient.send(payload);
 	startTime = Date.now();
-	for(var i = 0; i < msgCount; i++) {
+	//for(var i = 0; i < msgCount; i++) {
 		sendMsg();		
-	}
+	//}
 };
 
 
 function sendMsg() {
+	//console.log("send: " + (Date.now() - startTime));
 	wsClient.send(payload);
 }
 

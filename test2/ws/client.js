@@ -11,7 +11,8 @@ var countSendMsg = 1;
 var sendMsgReqCount = 0;
 var stopReceive;
 var countRecMsg = 0;
-var IP = "localhost";
+//var IP = "localhost";
+var IP = "192.168.1.7";
 
 process.on('message', function(message) {
 	var msg = JSON.parse(message);

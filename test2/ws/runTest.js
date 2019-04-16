@@ -9,6 +9,9 @@ var clientCount = args.length > 1 ? parseInt(args[1]) : 2;
 var msgCount = args.length > 2 ? parseInt(args[2]) : 10;
 var msgSpan = args.length > 3 ? parseInt(args[3]) : 100;
 
+//var IP = "localhost";
+var IP = "192.168.10.2";
+
 var currentTest = 1;
 var output = [];
 var avg = 0;
@@ -67,7 +70,7 @@ function endTest() {
 function startServerMonitor(callback) {
 
   var options = {
-		uri: 'http://localhost:8080/monitor/start',
+		uri: 'http://'+IP+':8080/monitor/start',
 		method: 'POST',
 		json: {
       start: isMonitoring,
@@ -85,7 +88,7 @@ function startServerMonitor(callback) {
 function finishServerMonitor(callback) {
   setTimeout(function () {
     var options = {
-      uri: 'http://localhost:8080/monitor/stop',
+      uri: 'http://'+IP+':8080/monitor/stop',
       method: 'GET'
     };
   

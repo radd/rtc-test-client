@@ -12,7 +12,8 @@ var sendMsgReqCount = 0;
 var eventSource;
 var stopReceive;
 var countRecMsg = 0;
-var IP = "localhost";
+//var IP = "localhost";
+var IP = "192.168.10.2";
 
 
 process.on('message', function(message) {

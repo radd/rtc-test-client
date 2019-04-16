@@ -12,7 +12,7 @@ var msgSpan = args.length > 3 ? parseInt(args[3]) : 100;
 var currentTest = 1;
 var output = [];
 var avg = 0;
-var isMonitoring = true;
+var isMonitoring = false;
 var monitorDelay = isMonitoring ? 5000 : 0;
 
 resetServer(runNextTest);

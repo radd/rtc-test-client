@@ -8,33 +8,46 @@ var countRecMsg = 0;
 var startTime;
 var endTime;
 var IP = "localhost";
+//var IP = "192.168.10.2";
 
 var options = {
   uri: 'http://'+IP+':8080/http/send',
   method: 'POST',
-  body: getPayload()
+  body: getPayload(),
+  headers: {
+    'Cache-Control': 'no-cache'
+  }
 };
 
+//request(options, function (error, response, body) {
+//	console.log("start");
+//});
 
 function startTest() {
 	startTime = Date.now();
-	for(var i = 0; i < msgCount; i++) {
+	//for(var i = 0; i < msgCount; i++) {
 		sendMsg();		
-	}
+	//}
 };
 
 
 function sendMsg() {
-		
+	//console.log("send: " + (Date.now() - startTime));
 	request(options, function (error, response, body) {
+		//console.log("rec: " + (Date.now() - startTime));
 		if (!error && response.statusCode == 200) {
 			countRecMsg++;
-			
+			//console.log(Date.now() - startTime);
+			//console.log(JSON.stringify(response));
 			if(countRecMsg==msgCount)
 			{		
 				endTime = Date.now();
 				endTest();
 			}
+			else {
+				sendMsg();
+			}
+			
 		}
 	});
 }
