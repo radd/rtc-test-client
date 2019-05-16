@@ -10,6 +10,9 @@ var endTime;
 var IP = "localhost";
 //var IP = "192.168.10.2";
 
+startTest();
+
+
 var options = {
   uri: 'http://'+IP+':8080/http/send',
   method: 'POST',
@@ -70,9 +73,6 @@ function endTest() {
 	
 	process.exit(0);
 }
-
-
-startTest();
 
 
 

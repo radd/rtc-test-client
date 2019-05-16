@@ -15,7 +15,7 @@ var IP = "192.168.10.2";
 var currentTest = 1;
 var output = [];
 var avg = 0;
-var isMonitoring = false;
+var isMonitoring = true;
 var monitorDelay = isMonitoring ? 5000 : 0;
 
 runNextTest();

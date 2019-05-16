@@ -10,6 +10,7 @@ var nextMsg = 1;
 var stopReceive;
 var countRecMsg = 0;
 var IP = "localhost";
+//var IP = "192.168.10.2";
 
 process.on('message', function(message) {
 	var msg = JSON.parse(message);
@@ -26,9 +27,9 @@ process.on('message', function(message) {
 		//console.log("delay: " + delay);
 
         connect();
-        //setTimeout(function() {
-        process.send(JSON.stringify({"type": "connected"}));
-        //},1000);
+        setTimeout(function() {
+          process.send(JSON.stringify({"type": "connected"}));
+        },1000);
 
 	} 
 	else if (msg.type === "startTest") {

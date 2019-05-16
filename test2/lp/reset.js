@@ -1,9 +1,11 @@
 var request = require('request');
+var IP = "localhost";
+//var IP = "192.168.10.2";
 
 function reset() {
 	
 	var options = {
-		uri: 'http://localhost:8080/lp/reset',
+		uri: 'http://'+IP+':8080/lp/reset',
 		method: 'GET'
 	  };
 

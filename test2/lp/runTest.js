@@ -12,8 +12,11 @@ var msgSpan = args.length > 3 ? parseInt(args[3]) : 100;
 var currentTest = 1;
 var output = [];
 var avg = 0;
-var isMonitoring = false;
+var isMonitoring = true;
 var monitorDelay = isMonitoring ? 5000 : 0;
+
+var IP = "localhost";
+//var IP = "192.168.10.2";
 
 resetServer(runNextTest);
 
@@ -79,7 +82,7 @@ function endTest() {
 function startServerMonitor(callback) {
 
   var options = {
-		uri: 'http://localhost:8080/monitor/start',
+		uri: 'http://'+IP+':8080/monitor/start',
 		method: 'POST',
 		json: {
       start: isMonitoring,
@@ -87,17 +90,20 @@ function startServerMonitor(callback) {
 			testID: currentTest
 		}
 	};
-
+setTimeout(function () {
   request(options, function (error, response, body) {
     setTimeout(callback, monitorDelay);
   });
+  
+}, monitorDelay-monitorDelay);
+  
   
 }
 
 function finishServerMonitor(callback) {
   setTimeout(function () {
     var options = {
-      uri: 'http://localhost:8080/monitor/stop',
+      uri: 'http://'+IP+':8080/monitor/stop',
       method: 'GET'
     };
   
